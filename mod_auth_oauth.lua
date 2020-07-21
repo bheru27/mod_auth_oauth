@@ -199,6 +199,7 @@ function provider.get_sasl_handler(session)
 	supported_mechanisms["PLAIN"] = true;
 	return new_sasl(host, {
 		plain_test = function(sasl, username, password, realm)
+			username = username .. "@" .. module.host; -- TODO: Pass this as an optional argument
 			return provider.test_password(username, password), true;
 		end,
 		oauthbearer = function(sasl, username, token, realm)
